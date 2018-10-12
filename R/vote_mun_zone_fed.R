@@ -67,7 +67,7 @@
 #' df <- vote_mun_zone_fed(2002)
 #' }
 
-vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FALSE, encoding = "latin1", export = FALSE){
+vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FALSE, encoding = "latin1", export = FALSE, unlink = FALSE){
 
 
   # Test the input
@@ -79,7 +79,7 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
   # Download the data
   dados <- tempfile()
   sprintf("http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_%s.zip", year) %>%
-    download.file(dados)
+    if (!file.exists(dados)) download.file(dados)
   unzip(dados, exdir = paste0("./", year))
   unlink(dados)
 
@@ -89,7 +89,7 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
   setwd(as.character(year))
   banco <- juntaDados(uf, encoding, br_archive)
   setwd("..")
-  unlink(as.character(year), recursive = T)
+  if(unlink == TRUE) unlink(as.character(year), recursive = T)
 
   # Change variable names
   if(year < 2014){
