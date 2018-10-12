@@ -77,11 +77,11 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
   br_archive <- test_br(br_archive)
 
   # Download the data
-  dados <- tempfile()
-  sprintf("http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_%s.zip", year) %>%
-    if (!file.exists(dados)) download.file(dados)
-  unzip(dados, exdir = paste0("./", year))
-  unlink(dados)
+  zip <- sprintf("votacao_candidato_munzona_%s.zip", year)
+  url <- sprintf("http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/%s", zip)
+  if (!file.exists(zip)) download.file(url, zip)
+  unzip(zip, exdir = paste0("./", year))
+  if(unlink == TRUE) unlink(zip)
 
   message("Processing the data...")
 
