@@ -95,16 +95,23 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
   if(unlink == TRUE) unlink(as.character(year), recursive = T)
 
   # Change variable names
-  if(year < 2014){
-    names(banco) <- c("DATA_GERACAO", "HORA_GERACAO", "ANO_ELEICAO", "NUM_TURNO", "DESCRICAO_ELEICAO",
-                      "SIGLA_UF", "SIGLA_UE", "CODIGO_MUNICIPIO", "NOME_MUNICIPIO", "NUMERO_ZONA",
-                      "CODIGO_CARGO", "NUMERO_CAND", "SQ_CANDIDATO", "NOME_CANDIDATO", "NOME_URNA_CANDIDATO",
-                      "DESCRICAO_CARGO", "COD_SIT_CAND_SUPERIOR", "DESC_SIT_CAND_SUPERIOR", "CODIGO_SIT_CANDIDATO",
-                      "DESC_SIT_CANDIDATO", "CODIGO_SIT_CAND_TOT", "DESC_SIT_CAND_TOT", "NUMERO_PARTIDO",
-                      "SIGLA_PARTIDO", "NOME_PARTIDO", "SEQUENCIAL_LEGENDA", "NOME_COLIGACAO", "COMPOSICAO_LEGENDA",
-                      "TOTAL_VOTOS")
-
-  } else {
+  if (year == 2018) {
+    message("2018\n")
+    # New: COD_TIPO_ELEICAO, NOME_TIPO_ELEICAO, COD_ELEICAO, DATA_ELEICAO, TP_ABRANGENCIA, NOME_UE, NOME_SOCIAL_CANDIDATO, TP_AGREMIACAO
+    # Rename LEGENDA -> COLIGACAO
+    # New (2): COD_SIT_TOT_TURNO, DESC_SIT_TOT_TURNO
+    names(banco) <- c("DATA_GERACAO", "HORA_GERACAO", "ANO_ELEICAO", "COD_TIPO_ELEICAO", "NOME_TIPO_ELEICAO", "NUM_TURNO",
+                      "COD_ELEICAO", "DESCRICAO_ELEICAO", "DATA_ELEICAO", "TP_ABRANGENCIA",
+                      "SIGLA_UF", "SIGLA_UE", "NOME_UE", "CODIGO_MUNICIPIO", "NOME_MUNICIPIO", "NUMERO_ZONA",
+                      "CODIGO_CARGO", "DESCRICAO_CARGO", "SQ_CANDIDATO", "NUMERO_CAND", "NOME_CANDIDATO", "NOME_URNA_CANDIDATO",
+                      "NOME_SOCIAL_CANDIDATO",
+                      "COD_SIT_CAND_SUPERIOR", "DESC_SIT_CAND_SUPERIOR", "CODIGO_SIT_CANDIDATO",
+                      "DESC_SIT_CANDIDATO", "TP_AGREMIACAO", "NUMERO_PARTIDO",
+                      "SIGLA_PARTIDO", "NOME_PARTIDO", "SEQUENCIAL_COLIGACAO", "NOME_COLIGACAO", "COMPOSICAO_COLIGACAO",
+                      "COD_SIT_TOT_TURNO", "DESC_SIT_TOT_TURNO",
+                      "TRANSITO", "TOTAL_VOTOS")
+  } else if(year == 2014) {
+    message("2014\n")
     names(banco) <- c("DATA_GERACAO", "HORA_GERACAO", "ANO_ELEICAO", "NUM_TURNO", "DESCRICAO_ELEICAO",
                       "SIGLA_UF", "SIGLA_UE", "CODIGO_MUNICIPIO", "NOME_MUNICIPIO", "NUMERO_ZONA",
                       "CODIGO_CARGO", "NUMERO_CAND", "SQ_CANDIDATO", "NOME_CANDIDATO", "NOME_URNA_CANDIDATO",
@@ -112,6 +119,15 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
                       "DESC_SIT_CANDIDATO", "CODIGO_SIT_CAND_TOT", "DESC_SIT_CAND_TOT", "NUMERO_PARTIDO",
                       "SIGLA_PARTIDO", "NOME_PARTIDO", "SEQUENCIAL_LEGENDA", "NOME_COLIGACAO", "COMPOSICAO_LEGENDA",
                       "TOTAL_VOTOS", "TRANSITO")
+  } else {
+    message("pre-2014\n")
+    names(banco) <- c("DATA_GERACAO", "HORA_GERACAO", "ANO_ELEICAO", "NUM_TURNO", "DESCRICAO_ELEICAO",
+                      "SIGLA_UF", "SIGLA_UE", "CODIGO_MUNICIPIO", "NOME_MUNICIPIO", "NUMERO_ZONA",
+                      "CODIGO_CARGO", "NUMERO_CAND", "SQ_CANDIDATO", "NOME_CANDIDATO", "NOME_URNA_CANDIDATO",
+                      "DESCRICAO_CARGO", "COD_SIT_CAND_SUPERIOR", "DESC_SIT_CAND_SUPERIOR", "CODIGO_SIT_CANDIDATO",
+                      "DESC_SIT_CANDIDATO", "CODIGO_SIT_CAND_TOT", "DESC_SIT_CAND_TOT", "NUMERO_PARTIDO",
+                      "SIGLA_PARTIDO", "NOME_PARTIDO", "SEQUENCIAL_LEGENDA", "NOME_COLIGACAO", "COMPOSICAO_LEGENDA",
+                      "TOTAL_VOTOS")
   }
   
   # Change to ascii
