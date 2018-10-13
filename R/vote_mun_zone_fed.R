@@ -79,8 +79,11 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
   # Download the data
   zip <- sprintf("votacao_candidato_munzona_%s.zip", year)
   url <- sprintf("http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/%s", zip)
-  if (!file.exists(zip)) download.file(url, zip)
-  unzip(zip, exdir = paste0("./", year))
+  if (isFALSE(file.exists(zip))){
+    message("Downloading metada...\n")
+    download.file(url, zip)
+    unzip(zip, exdir = paste0("./", year))
+  }
   if(unlink == TRUE) unlink(zip)
 
   message("Processing the data...")
