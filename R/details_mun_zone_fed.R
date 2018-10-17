@@ -68,7 +68,7 @@
 #' df <- details_mun_zone_fed(2002)
 #' }
 
-details_mun_zone_fed <- function(year, uf = "all", br_archive = FALSE, ascii = FALSE, encoding = "latin1", export = FALSE){
+details_mun_zone_fed <- function(year, uf = "all", br_archive = FALSE, ascii = FALSE, encoding = "latin1", export = FALSE, unlink = FALSE){
 
 
   # Input tests
@@ -77,12 +77,14 @@ details_mun_zone_fed <- function(year, uf = "all", br_archive = FALSE, ascii = F
   uf <- test_uf(uf)
   br_archive <- test_br(br_archive)
 
-  # Downloads the data
-  dados <- tempfile()
-  sprintf("http://agencia.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_%s.zip", year) %>%
-    download.file(dados)
-  unzip(dados, exdir = paste0("./", year))
-  unlink(dados)
+  zip <- sprintf("detalhe_votacao_munzona_%s.zip", year)
+  url <- sprintf("http://agencia.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_munzona/%s", zip)
+  if (isFALSE(file.exists(zip))){
+    message("Downloading metada...\n")
+    download.file(url, zip)
+    unzip(zip, exdir = paste0("./", year))
+  }
+  if(unlink == TRUE) unlink(zip)
 
   message("Processing the data...")
 
