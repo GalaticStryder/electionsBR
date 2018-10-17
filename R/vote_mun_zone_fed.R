@@ -69,6 +69,7 @@
 
 vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FALSE, encoding = "latin1", export = FALSE, unlink = FALSE){
 
+  setwd(as.character(year))
 
   # Test the input
   test_encoding(encoding)
@@ -89,10 +90,9 @@ vote_mun_zone_fed <- function(year, uf = "all",  br_archive = FALSE, ascii = FAL
   message("Processing the data...")
 
   # Clean the data
-  setwd(as.character(year))
   banco <- juntaDados(uf, encoding, br_archive)
-  setwd("..")
   if(unlink == TRUE) unlink(as.character(year), recursive = T)
+  setwd("..")
 
   # Change variable names
   if (year == 2018) {

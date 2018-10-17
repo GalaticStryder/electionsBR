@@ -70,6 +70,7 @@
 
 details_mun_zone_fed <- function(year, uf = "all", br_archive = FALSE, ascii = FALSE, encoding = "latin1", export = FALSE, unlink = FALSE){
 
+  setwd(as.character(year))
 
   # Input tests
   test_encoding(encoding)
@@ -89,16 +90,16 @@ details_mun_zone_fed <- function(year, uf = "all", br_archive = FALSE, ascii = F
   message("Processing the data...")
 
   # Cleans the data
-  setwd(as.character(year))
   banco <- juntaDados(uf, encoding, br_archive)
-  setwd("..")
   unlink(as.character(year), recursive = T)
+  setwd("..")
 
   # Changes variables names
   if (year == 2018) {
     message("2018\n")
     names(banco) <- c("DATA_GERACAO", "HORA_GERACAO", "ANO_ELEICAO", "CODIGO_TIPO_ELEICAO", "DESCRICAO_TIPO_ELEICAO",
-                      "NR_TURNO","CODIGO_ELEICAO", "DESCRICAO_ELEICAO", "DATA_ELEICAO", "TP_ABRANGENCIA", "SIGLA_UF", "SIGLA_UE", "NOME_UE", "CODIGO_MUNICIPIO", "NOME_MUNICIPIO", "NUMERO_ZONA",
+                      "NR_TURNO","CODIGO_ELEICAO", "DESCRICAO_ELEICAO", "DATA_ELEICAO", "TP_ABRANGENCIA", "SIGLA_UF",
+                      "SIGLA_UE", "NOME_UE", "CODIGO_MUNICIPIO", "NOME_MUNICIPIO", "NUMERO_ZONA",
                       "CODIGO_CARGO", "DESCRICAO_CARGO", "QTD_APTOS", "QTD_SECOES", "QTD_SECOES_AGREGADAS",
                       "QTD_APTOS_TOT", "QTD_SECOES_TOT", "QTD_COMPARECIMENTO", "QTD_ABSTENCOES", "ST_VOTO_EM_TRANSITO",
                       "QTD_VOTOS_NOMINAIS", "QTD_VOTOS_BRANCOS", "QTD_VOTOS_NULOS", "QTD_VOTOS_LEGENDA", "QTD_VOTOS_PENDENTES",
